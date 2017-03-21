@@ -2,48 +2,19 @@ import React from 'react';
 import {ajax} from 'jquery'
 
 export default class PicAndLink extends React.Component {
-    constructor() {
-        super();
-        this.state = {
-            pic: '',
-            link: ''
-        }
-    }   
     componentDidMount() {
-        ajax({
-        url: 'https://api.spotify.com/v1/search',
-        method: 'GET',
-        dataType: 'json',
-            data: {
-            	q: this.props.data.artist_name,
-            	type: 'artist'
-            }
-        })
-        .then((spoData) => {
-            console.log(spoData);
-            if(spoData.artists.items.length > 0) {
-                const spoArtist = spoData.artists.items[0];
-                const artistPic = spoArtist.images[0].url;
-                const artistLink = spoArtist.external_urls.spotify;
-                console.log(artistPic);
-                console.log(artistLink)
-                this.setState({
-                    pic: artistPic,
-                    link: artistLink
-                })
-                
-            }
-        });
+        this.props.getAlbumArtwork(this.props.data.artist_name, this.props.index);
     }
     render() {
         return(
             <div>
-                <img src={this.state.pic} alt=""/>
-                <a href={this.state.link}>Find artist on Spotify</a>
+                <img className="artistPic" src={this.props.artistPic} alt=""/>
+                <h3>Song: {this.props.data.track_name}</h3>
+                <p>Artist: {this.props.data.artist_name}</p>
+                <p>Album: {this.props.data.album_name}</p>
+                <a className="playSpo" href={this.props.artistLink}>Play {this.props.data.artist_name} on Spotify</a>
             </div>
         )
     }
 }
-
-//this.props.data.artist
 

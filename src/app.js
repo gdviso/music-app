@@ -25,12 +25,14 @@ class App extends React.Component{
             song: '',
             songs: [],
             mySongs: [],
-            loggedin: false
+            loggedin: false,
+
         }
         this.findSong = this.findSong.bind(this);
         this.handleChange = this.handleChange.bind(this);
         this.displayResults = this.displayResults.bind(this);
         this.addSong = this.addSong.bind(this);
+        this.getAlbumArtwork = this.getAlbumArtwork.bind(this);
     }
     componentDidMount() {
 		//fire base auth:
@@ -80,7 +82,7 @@ class App extends React.Component{
 					}
 				}	
 			}).then((data) => {
-				console.log(data);
+				// console.log(data);
 				this.setState({
 					songs: data.message.body.track_list
 				})
@@ -93,11 +95,39 @@ class App extends React.Component{
 
 		});
 	}
-	addSong(songToAdd){
+	getAlbumArtwork(artistName, i) {
+		ajax({
+		url: 'https://api.spotify.com/v1/search',
+		method: 'GET',
+		dataType: 'json',
+		    data: {
+		    	q: artistName,
+		    	type: 'artist'
+		    }
+		})
+		.then((spoData) => {
+		    if(spoData.artists.items.length > 0) {
+		        const spoArtist = spoData.artists.items[0];
+		        const artistPic = spoArtist.images[0].url;
+		        const artistLink = spoArtist.external_urls.spotify;
+		        const newSongs = [...this.state.songs];
+		        newSongs[i].pic = artistPic;
+		        newSongs[i].link = artistLink;
+		        this.setState({
+		            songs: newSongs
+		        })
+		        
+		    }
+		});
+	}
+	addSong(songToAdd, pictureAndLink){
 		const songItem ={
 			name: songToAdd.track_name,
-			artist: songToAdd.artist_name
+			artist: songToAdd.artist_name,
+			link: pictureAndLink.link,
+			pic: pictureAndLink.pic
 		}
+		console.log(songItem)
 		const mySongs = Array.from(this.state.mySongs);
 		mySongs.push(songItem);
 		this.setState({
@@ -113,20 +143,19 @@ class App extends React.Component{
 		 dbRef.remove();
 	}
 	displayResults() {
-		return this.state.songs.map((song) => {
+		return this.state.songs.map((song,i) => {
+			let ogSong = song;
 			song = song.track
-			console.log(song);
+			// console.log(song);
 			return (
 				<div key={song.track_id}>
-					<div className="songContainer">
-						<PicAndLink data={song}/>
-						<h1>Song: {song.track_name}</h1>
-						<h2>Artist: {song.artist_name}</h2>
-						<h3>Album: {song.album_name}</h3>
-						<a href={song.track_share_url}>See full lyrics</a>
-						<button onClick={() => this.addSong(song)} className="add">➕ Add to my songs!</button>
+					<div className="results">
+						<div className="songContainer">
+							<PicAndLink index={i} getAlbumArtwork={this.getAlbumArtwork} artistPic={ogSong.pic} artistLink={ogSong.link} data={song}/>
+							<a href={song.track_share_url}>See full lyrics</a>
+							<button onClick={() => this.addSong(song, ogSong)} className="add">➕ Add to my songs!</button>
+						</div>
 					</div>
-					
 				</div>
 			)
 		});
@@ -135,21 +164,19 @@ class App extends React.Component{
 		return(
 			<div>
 				<Header/>
-
-				<h1>Find a Song 🎵</h1>
-				<form onSubmit={this.findSong}>
-		             <input required type="text" onChange={this.handleChange} name="lyrics"/>
-		             <input type="submit" value="Find me the song!"/>
+				<form onSubmit={this.findSong} className="searchForm">
+		             <input required className="lyrics" type="text" onChange={this.handleChange} name="lyrics" placeholder="Type lyrics to find a song!"/>
+		             <input className="findBtn" type="submit" value="Find me the song!"/>
 	             </form>
 	             {this.displayResults()}   
 
 				<div className="savedSongs">
 					<h2>My Music</h2>
-					<ul>
+					<div>
 						{this.state.mySongs.map((song, i) => {
 							return <MySongs data={song} remove={this.removeSong} key={`song-${i}`}/>
 						})}
-					</ul>
+					</div>
 				</div>
 			</div>
 		)

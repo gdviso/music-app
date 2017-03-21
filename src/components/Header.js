@@ -1,6 +1,14 @@
 import React from 'react';
 
 export default class Header extends React.Component {
+	constructor(){
+		super();
+		this.state ={
+			loggedIn:false
+		}
+		this.createUser = this.createUser.bind(this);
+		this.logOut = this.logOut.bind(this);
+	}
 
 	toggleOverlay() {
 		this.overlay.classList.toggle('show');
@@ -9,6 +17,12 @@ export default class Header extends React.Component {
 		e.preventDefault();
 		this.loginModal.classList.add('show');
 		this.toggleOverlay.call(this);
+	}
+	hideModal(e){
+	e.preventDefault();
+	this.loginModal.classList.remove('show');
+	this.createUserModal.classList.remove('show');
+	this.toggleOverlay.call(this);
 	}
 	loginUser(e) {
 		e.preventDefault();
@@ -21,17 +35,10 @@ export default class Header extends React.Component {
 			.then((res) => {
 				this.loginModal.classList.remove('show');
 				this.toggleOverlay.call(this);
-				this.userNav.classList.add('show');
-
 			})
 			.catch((err) => {
 				alert(err.message);
 			});
-			if(this.state.loggedin === true){
-			this.initialNav.classList.add('hide');
-			console.log('true')
-			}
-
 	}
 	createModal(e) {
 		e.preventDefault();
@@ -63,28 +70,55 @@ export default class Header extends React.Component {
 	}
 	logOut(e){
 	e.preventDefault();
-	this.userNav.classList.remove('hide');
 	firebase.auth().signOut();
-
+		this.setState({
+			loggedIn:false
+		});
+	}
+	componentDidMount(){
+		firebase.auth().onAuthStateChanged(user =>{
+			if(user){
+				this.setState({
+					loggedIn:true
+				})
+			}
+		});
 	}
 
 	render() {
+		let loginOption;
+		if (this.state.loggedIn === false){
+			loginOption = (
+						<nav className="initialNav" ref={ref => this.initialNav = ref}>
+							<a href="" className="logIn" onClick={(e) => this.showLoginModal.call(this,e)}>Login</a>
+							<a href="" className="signUp" onClick={(e) => this.createModal.call(this,e)}>Sign Up</a>
+						</nav>
+						)
+			}else if (this.state.loggedIn === true){
+				loginOption = (
+						<nav className="userNav" ref={ref => this.userNav = ref}>
+							<a className="logOut" href="#" onClick={this.logOut}>Log out of {`${firebase.auth().currentUser.email}`}</a>
+						</nav>
+						)	
+			}
 		return (
 			<div>
 				<header>
-					<img className="logo" src="../assets/logo.png" alt=""/>
-					<h1>header</h1>
-					<nav className="initialNav" ref={ref => this.initialNav = ref}>
-						<a href="" onClick={(e) => this.showLoginModal.call(this,e)}>Login</a>
-						<a href="" onClick={(e) => this.createModal.call(this,e)}>Sign Up</a>
-					</nav>
-					<nav className="userNav" ref={ref => this.userNav = ref}>
-						<p>Loged in as:</p>
-						<a href="#" onClick={this.logOut}>Sign out</a>
-					</nav>
+					<div className="topBar">
+						<div className="logo">
+							<a href="index.html">
+							<img className="logo animated jello" src="../assets/logo.svg" alt=""/>
+							<img className="logo2" src="../assets/logo2.png" alt=""/>
+							</a>
+						</div>	
+						{loginOption}
+					</div>
 				</header>
-				<div className="overlay" ref={ref => this.overlay = ref}></div>
+				<div className="overlay" onClick={(e) => this.hideModal.call(this,e)} ref={ref => this.overlay = ref}></div>
 				<div className="loginModal modal" ref={ref => this.loginModal = ref}>
+						<div className="close">
+							<i onClick={(e) => this.hideModal.call(this,e)} className="fa fa-times-circle" aria-hidden="true"></i>
+						</div>
 					<form action="" onSubmit={e => this.loginUser.call(this,e)}>
 						<div>
 							<label htmlFor="email">Email:</label>
@@ -100,6 +134,9 @@ export default class Header extends React.Component {
 					</form>
 				</div>
 				<div className="createUserModal modal" ref={ref => this.createUserModal = ref}>
+				<div className="close">
+							<i onClick={(e) => this.hideModal.call(this,e)} className="fa fa-times-circle" aria-hidden="true"></i>
+						</div>
 					<form action="" onSubmit={e => this.createUser.call(this,e)}>
 						<div>
 							<label htmlFor="createEmail">Email:</label>
