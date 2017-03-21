@@ -1,9 +1,10 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import {ajax} from 'jquery'
-import Header from './components/Header';
 import MySongs from './components/MySongs';
 import PicAndLink from './components/Spotify';
+import Header from './components/Header';
+
 
 const apiKey= '1afc4c66fe29e1273087a038b2d9574c';
 const apiUrl = 'http://api.musixmatch.com/ws/1.1/track.search';
@@ -55,11 +56,13 @@ class App extends React.Component{
 					mySongs: [],
 					loggedin:true
 				});
+
 			}
 		});
 	}
     findSong(e){
    		e.preventDefault();
+	  
 		if(this.state.song !== " " ){ //avoid blank search
 			let song = this.state.song;
 			ajax({
@@ -112,8 +115,9 @@ class App extends React.Component{
 	displayResults() {
 		return this.state.songs.map((song) => {
 			song = song.track
+			console.log(song);
 			return (
-				<div>
+				<div key={song.track_id}>
 					<div className="songContainer">
 						<PicAndLink data={song}/>
 						<h1>Song: {song.track_name}</h1>
@@ -131,6 +135,7 @@ class App extends React.Component{
 		return(
 			<div>
 				<Header/>
+
 				<h1>Find a Song 🎵</h1>
 				<form onSubmit={this.findSong}>
 		             <input required type="text" onChange={this.handleChange} name="lyrics"/>

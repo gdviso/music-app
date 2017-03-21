@@ -1,126 +1,125 @@
 import React from 'react';
 
 export default class Header extends React.Component {
-	constructor() {
-		super();
-		this.state = {
-			formToShow: '',
-			email: '',
-			password: '',
-			confirm: ''
-		};
-		this.formToShow = this.formToShow.bind(this);
-		this.handleChange = this.handleChange.bind(this);
-		this.signup = this.signup.bind(this);
-		this.login = this.login.bind(this);
+
+	toggleOverlay() {
+		this.overlay.classList.toggle('show');
 	}
-	formToShow(e) {
+	showLoginModal(e) {
 		e.preventDefault();
-		this.setState({
-			formToShow: e.target.className
-		})
+		this.loginModal.classList.add('show');
+		this.toggleOverlay.call(this);
 	}
-	handleChange(e) {
-		this.setState({
-			[e.target.name]: e.target.value
-		});
-	}
-	signup(e) {
+	loginUser(e) {
 		e.preventDefault();
-		if(this.state.password === this.state.confirm){
-			firebase.auth()
-			.createUserWithEmailAndPassword(this.state.email, this.state.password)
-				.then((userData) =>{
-					console.log(userData)
-				})
-				// sign up errrors
-				.catch(function(error) {
-				   // Handle Errors here.
-				   var errorCode = error.code;
-				   var errorMessage = error.message;
-				   // [START_EXCLUDE]
-				   if (errorCode == 'auth/weak-password') {
-				     alert('The password is too weak.');
-				   } else {
-				     alert(errorMessage);
-				   }
-				});
-		}else{
-			alert('passwords do not match')
+		const user = {
+			email: this.userEmail.value,
+			password: this.userPassword.value
 		}
-	}
-	login(e) {
-		e.preventDefault();
-		const email = this.userEmail.value;
-		const password = this.userPass.value;
 		firebase.auth()
-		.signInWithEmailAndPassword(this.state.email, this.state.password)
-		.then ((userData) =>{
-			console.log(userData)
-			alert(`Welcome ${this.state.email}!`)
-			
-		})
-        //sign in errors:
-       .catch(function(error) {
-          // Handle Errors here.
-          var errorCode = error.code;
-          var errorMessage = error.message;
-          // [START_EXCLUDE]
-          if (errorCode === 'auth/wrong-password') {
-            alert('Wrong password.');
-          } else {
-            alert(errorMessage);
-          }
-        });
+			.signInWithEmailAndPassword(user.email,user.password)
+			.then((res) => {
+				this.loginModal.classList.remove('show');
+				this.toggleOverlay.call(this);
+				this.userNav.classList.add('show');
+
+			})
+			.catch((err) => {
+				alert(err.message);
+			});
+			if(this.state.loggedin === true){
+			this.initialNav.classList.add('hide');
+			console.log('true')
+			}
+
 	}
+	createModal(e) {
+		e.preventDefault();
+		this.createUserModal.classList.add('show');
+		this.toggleOverlay.call(this);
+	}
+	createUser(e) {
+		e.preventDefault();
+
+		const user = {
+			email: this.createEmail.value,
+			password: this.createPassword.value,
+			confirm: this.confirmPassword.value
+		};
+		if(user.confirm !== user.password) {
+			alert('Please make sure you passwords match.');
+			return;
+		}
+		firebase.auth()
+			.createUserWithEmailAndPassword(user.email,user.password)
+			.then((res) => {
+				this.createUserModal.classList.remove('show');
+				this.toggleOverlay.call(this);
+			})
+			.catch((err) => {
+				alert(err.message)
+			});
+
+	}
+	logOut(e){
+	e.preventDefault();
+	this.userNav.classList.remove('hide');
+	firebase.auth().signOut();
+
+	}
+
 	render() {
-		let loginForm = '';
-		if(this.state.formToShow === 'signup') {
-			loginForm = (
-				<div className="signUpForm">
-					<form onSubmit={this.signup} className="user-form">
-						<label htmlFor="email">Email: </label>
-						<input required type="email" name="email" onChange={this.handleChange} />
-						<label htmlFor="password">Password: </label>
-						<input required type="password" name="password" onChange={this.handleChange} />
-						<label htmlFor="confirm">Confirm Password:</label>
-						<input required type="password" name="confirm" onChange={this.handleChange} />
-						<button>Sign In</button>
-					</form>
-				</div>
-			);
-		}
-		else if(this.state.formToShow === "login") {
-			loginForm = (
-				<div className="overlay">
-					<div className="loginForm" ref={ref => this.loginForm = ref}>
-						<div className="close">
-						X
-						</div>
-						<form onSubmit={this.login} className="user-form">
-							<label htmlFor="email">Email: </label>
-							<input type="email" name="email" onChange={this.handleChange} ref={ref => this.userEmail = ref}/>
-							<label htmlFor="password">Password: </label>
-							<input type="password" name="password" onChange={this.handleChange} ref={ref => this.userPass = ref}/>
-							<input type="submit" value="Log-in"/>
-						</form>
-					</div>
-				</div>	
-			);
-		}
 		return (
 			<div>
 				<header>
-					<h1>Welcome {this.state.email}</h1>
-					<nav>
-						<ul>
-							<li><a href="" className="signup" onClick={this.formToShow}>Sign Up</a></li>
-							<li><a href="" className="login" onClick={this.formToShow}>Log In</a></li>
-						</ul>
+					<img className="logo" src="../assets/logo.png" alt=""/>
+					<h1>header</h1>
+					<nav className="initialNav" ref={ref => this.initialNav = ref}>
+						<a href="" onClick={(e) => this.showLoginModal.call(this,e)}>Login</a>
+						<a href="" onClick={(e) => this.createModal.call(this,e)}>Sign Up</a>
+					</nav>
+					<nav className="userNav" ref={ref => this.userNav = ref}>
+						<p>Loged in as:</p>
+						<a href="#" onClick={this.logOut}>Sign out</a>
 					</nav>
 				</header>
-				{loginForm}
+				<div className="overlay" ref={ref => this.overlay = ref}></div>
+				<div className="loginModal modal" ref={ref => this.loginModal = ref}>
+					<form action="" onSubmit={e => this.loginUser.call(this,e)}>
+						<div>
+							<label htmlFor="email">Email:</label>
+							<input type="text" name="email" ref={ref => this.userEmail = ref}/>
+						</div>
+						<div>
+							<label htmlFor="password">Password:</label>
+							<input type="password" name="password" ref={ref => this.userPassword = ref}/>
+						</div>
+						<div>
+							<input type="submit"/>
+						</div>
+					</form>
+				</div>
+				<div className="createUserModal modal" ref={ref => this.createUserModal = ref}>
+					<form action="" onSubmit={e => this.createUser.call(this,e)}>
+						<div>
+							<label htmlFor="createEmail">Email:</label>
+							<input type="text" name="createEmail" ref={ref => this.createEmail = ref}/>
+						</div>
+						<div>
+							<label htmlFor="createPassword">Password:</label>
+							<input type="password" name="createPassword" ref={ref => this.createPassword = ref}/>
+						</div>
+						<div>
+							<label htmlFor="confirmPassword">Confirm Password:</label>
+							<input type="password" name="confirmPassword" ref={ref => this.confirmPassword = ref}/>
+						</div>
+						<div>
+							<input type="submit"/>
+						</div>
+					</form>
+				</div>
 			</div>
-		)
+		);
 	}
 }
+

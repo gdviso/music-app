@@ -1,19 +1,52 @@
-.overlay {
-    background: rgba(0, 0, 0, 0.3);
-    display: flex;
-    justify-content: center;
-    height: 100vh;
-    width: 100%;
-    left: 0;
-    top: 0;
-    position: absolute;
-    transition: all 1s ease;
-    align-items: center;
+body{
+background: linear-gradient(to bottom, #D5DEE7 0%, #E8EBF2 50%, #E2E7ED 100%), linear-gradient(to bottom, rgba(0,0,0,0.02) 50%, rgba(255,255,255,0.02) 61%, rgba(0,0,0,0.02) 73%), linear-gradient(33deg, rgba(255,255,255,0.20) 0%, rgba(0,0,0,0.20) 100%);
+ background-blend-mode: normal,color-burn;
+ height: 100vh;
 }
 
-.loginForm {
-    width: 400px;
-    background: white;
-    height: 250px;
-    border: 2px solid black;
+img.logo{
+	width: 80px;
 }
+
+.initialNav.hide{
+	display: none;
+}
+
+.modal, .overlay, .userNav {
+	visibility: hidden;
+	opacity: 0;
+	transition: all 0.6s ease;
+	position: absolute;
+}
+
+.modal.show, .overlay.show, .userNav.show {
+	visibility: visible;
+	opacity: 1;
+}
+
+.modal {
+	width: 400px;
+	background: white;
+	border: 10px solid rgba(255,255,255,0.5);
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%,-50%);
+}
+
+.modal div {
+	margin: 15px;
+	display: flex;
+}
+.modal label {
+	margin-right: 10px;
+}
+
+.overlay {
+	top: 0;
+	left: 0;
+	height: 100%;
+	width: 100%;
+	background: rgba(0,0,0,0.4);
+}
+
+
