@@ -56,7 +56,7 @@ class App extends React.Component{
 			else{
 				this.setState({
 					mySongs: [],
-					loggedin:true
+					loggedin:false
 				});
 
 			}
@@ -108,18 +108,26 @@ class App extends React.Component{
 		    }
 		})
 		.then((spoData) => {
-		    if(spoData.artists.items.length > 0) {
-		        const spoArtist = spoData.artists.items[0];
-		        const artistPic = spoArtist.images[0].url;
-		        const artistLink = spoArtist.external_urls.spotify;
-		        const newSongs = [...this.state.songs];
-		        newSongs[i].pic = artistPic;
-		        newSongs[i].link = artistLink;
-		        this.setState({
-		            songs: newSongs
-		        })
-		        
-		    }
+			if(spoData.artists.items.length === 0) {
+				const artistPic = "/public/assets/noimage.svg";
+				const artistLink = "http://spotify.com/";
+				const newSongs = [...this.state.songs];
+				newSongs[i].pic = artistPic;
+				newSongs[i].link = artistLink;
+				this.setState({
+					songs: newSongs
+				});
+			} else {
+				const spoArtist = spoData.artists.items[0];
+				const artistPic = spoArtist.images[0].url;
+				const artistLink = spoArtist.external_urls.spotify;
+				const newSongs = [...this.state.songs];
+				newSongs[i].pic = artistPic;
+				newSongs[i].link = artistLink;
+				this.setState({
+				    songs: newSongs
+				})
+			}
 		});
 	}
 	addSong(songToAdd, pictureAndLink){
@@ -129,7 +137,6 @@ class App extends React.Component{
 			link: pictureAndLink.link,
 			pic: pictureAndLink.pic
 		}
-		console.log(songItem)
 		const mySongs = Array.from(this.state.mySongs);
 		mySongs.push(songItem);
 		this.setState({
@@ -163,18 +170,30 @@ class App extends React.Component{
 		});
 	}
 	render(){
+		console.log(this.state.loggedin)
+		let logTitle = "";
+		if (this.state.loggedin === false){
+			logTitle = (
+				<h2>Log in to be able to save songs!</h2>
+			)
+		}else if (this.state.loggedin === true){
+			logTitle = (
+				<h2 className="myMusicTitle">My Music</h2>
+			)
+		}
+		{console.log(logTitle)}
 		return(
 			<div>
 				<Header/>
 				<form onSubmit={this.findSong} className="searchForm">
-		             <input required className="lyrics" type="text" onChange={this.handleChange} name="lyrics" placeholder="Type lyrics to find a song!"/>
+		             <input required className="lyrics" type="text" onChange={this.handleChange} name="lyrics" placeholder="Type lyrics here!"/>
 		             <input className="findBtn" type="submit" value="Find me the song!"/>
 	             </form>
 	             <div className="results">
 	            	 {this.displayResults()}  
 	             </div> 
 				<div className="savedSongs">
-					<h2>My Music</h2>
+						{logTitle}
 						{this.state.mySongs.map((song, i) => {
 							return <MySongs data={song} remove={this.removeSong} key={`song-${i}`}/>
 						})}

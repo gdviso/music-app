@@ -90,7 +90,7 @@ export default class Header extends React.Component {
 		if (this.state.loggedIn === false){
 			loginOption = (
 						<nav className="initialNav" ref={ref => this.initialNav = ref}>
-							<a href="" className="logIn" onClick={(e) => this.showLoginModal.call(this,e)}>Login</a>
+							<a href="" className="logIn" onClick={(e) => this.showLoginModal.call(this,e)}>Log in</a>
 							<a href="" className="signUp" onClick={(e) => this.createModal.call(this,e)}>Sign Up</a>
 						</nav>
 						)
@@ -107,8 +107,8 @@ export default class Header extends React.Component {
 					<div className="topBar">
 						<div className="logo">
 							<a href="index.html">
-							<img className="logo animated jello" src="../assets/logo.svg" alt=""/>
-							<img className="logo2" src="../assets/mymusic.png" alt=""/>
+							<img className="logo animated jello" src="./public/assets/logo.svg" alt=""/>
+							<img className="logo2" src="./public/assets/ymusic.svg" alt=""/>
 							</a>
 						</div>	
 						{loginOption}
@@ -119,17 +119,19 @@ export default class Header extends React.Component {
 						<div className="close">
 							<i onClick={(e) => this.hideModal.call(this,e)} className="fa fa-times-circle" aria-hidden="true"></i>
 						</div>
-					<form action="" onSubmit={e => this.loginUser.call(this,e)}>
+						<div className="modalLogo">
+							<img className="logo animated jello" src="./public/assets/logo.svg" alt=""/>
+							<h3 className="modalTitle">Log in</h3>
+						</div>
+					<form className="loginForm" action="" onSubmit={e => this.loginUser.call(this,e)}>
 						<div>
-							<label htmlFor="email">Email:</label>
-							<input type="text" name="email" ref={ref => this.userEmail = ref}/>
+							<input placeholder="Enter email" type="text" name="email" ref={ref => this.userEmail = ref}/>
 						</div>
 						<div>
-							<label htmlFor="password">Password:</label>
-							<input type="password" name="password" ref={ref => this.userPassword = ref}/>
+							<input placeholder="Enter password" type="password" name="password" ref={ref => this.userPassword = ref}/>
 						</div>
 						<div>
-							<input type="submit"/>
+							<input className="modalSubmit" type="submit"/>
 						</div>
 					</form>
 				</div>
@@ -137,21 +139,22 @@ export default class Header extends React.Component {
 				<div className="close">
 							<i onClick={(e) => this.hideModal.call(this,e)} className="fa fa-times-circle" aria-hidden="true"></i>
 						</div>
-					<form action="" onSubmit={e => this.createUser.call(this,e)}>
+						<div className="modalLogo">
+							<img className="logo animated jello" src="./public/assets/logo.svg" alt=""/>
+							<h3 className="modalTitle">Log in</h3>
+						</div>
+					<form className="loginForm" action="" onSubmit={e => this.createUser.call(this,e)}>
 						<div>
-							<label htmlFor="createEmail">Email:</label>
-							<input type="text" name="createEmail" ref={ref => this.createEmail = ref}/>
+							<input placeholder="Enter email" type="text" name="createEmail" ref={ref => this.createEmail = ref}/>
 						</div>
 						<div>
-							<label htmlFor="createPassword">Password:</label>
-							<input type="password" name="createPassword" ref={ref => this.createPassword = ref}/>
+							<input placeholder="Enter password" type="password" name="createPassword" ref={ref => this.createPassword = ref}/>
 						</div>
 						<div>
-							<label htmlFor="confirmPassword">Confirm Password:</label>
-							<input type="password" name="confirmPassword" ref={ref => this.confirmPassword = ref}/>
+							<input placeholder="Confirm password" type="password" name="confirmPassword" ref={ref => this.confirmPassword = ref}/>
 						</div>
 						<div>
-							<input type="submit"/>
+							<input className="modalSubmit" type="submit"/>
 						</div>
 					</form>
 				</div>

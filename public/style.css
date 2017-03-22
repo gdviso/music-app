@@ -50,7 +50,7 @@ nav.initialNav a,  nav.userNav a{
  nav.initialNav a:hover, nav.userNav a:hover{
  	color:#54c4e8;
  }
-
+/*icons before and after:*/
 a.logOut:before{
 	font-family: FontAwesome;
    	content: "\f08b";
@@ -84,6 +84,12 @@ a.lyricsBtn:before{
    	content: "\f0c9";
    	padding-right: 5px;
 }
+h2.myMusicTitle:after{
+	font-family: FontAwesome;
+	content: "\f0ab";
+	padding-left: 5px;
+}
+
 
 /* modals */
 .modal, .overlay {
@@ -96,6 +102,7 @@ a.lyricsBtn:before{
 .modal.show, .overlay.show {
 	visibility: visible;
 	opacity: 1;
+	z-index: 99;
 }
 
 .modal {
@@ -104,12 +111,18 @@ a.lyricsBtn:before{
 	border: 10px solid rgba(255,255,255,0.5);
 	top: 50%;
 	left: 50%;
+	box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.56);
+	border-radius: 20px;
 	transform: translate(-50%,-50%);
 }
 
 .modal div {
-	margin: 15px;
+	margin: 10px;
+}
+.modalLogo{
 	display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 .modal label {
 	margin-right: 10px;
@@ -122,7 +135,44 @@ a.lyricsBtn:before{
 	width: 100%;
 	background: rgba(0,0,0,0.4);
 }
+.close {
+    display: flex;
+    flex-direction: row-reverse;
+    margin: 0!important;
+    font-size: 20px;
+}
+form.loginForm {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.modalTitle{
+	margin-bottom: 0;
+}
+.modal input {
+   width: 300px;
+   padding: 10px;
+   border-radius: 5px;
+   height: 40px;
+}
+.modalSubmit{
+	padding: 10px 20px;
+    font-weight: bold;
+    letter-spacing: 1px;
+    font-size: 18px;
+    border-radius: 3px;
+    text-shadow: 2px 1px 1px #2f7085;
+    color: white;
+    background: #54c4e8;
+    border: none;
+    box-shadow: 4px 4px 0px #2f7085;
+    margin-bottom: 25px;
+}
+i.fa.fa-times-circle:hover {
+    color: #54c4e8;
+    cursor: pointer;
 
+}
 /*search bar*/
 input.lyrics {
     background: none;
@@ -132,10 +182,20 @@ input.lyrics {
     text-align: center;
     font-family: 'Montserrat', sans-serif;
     margin-bottom: 25px;
+
 }
-input.lyrics::-webkit-input-placeholder{
-	color: grey;
+input.lyrics,input.lyrics::-webkit-input-placeholder, h2.myMusicTitle{
+/*bacground for all browsers:*/
+    background: #fc00ff; 
+    background: -moz-linear-gradient(left,  #fc00ff 0%, #862dff 50%, #35a4ff 100%); 
+    background: -webkit-linear-gradient(left,  #fc00ff 0%,#862dff 50%,#35a4ff 100%); 
+    background: linear-gradient(to right,  #fc00ff 0%,#862dff 50%,#35a4ff 100%); 
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fc00ff', endColorstr='#35a4ff',GradientType=1 ); 
+    /*clip background:*/
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
+
 form.searchForm {
     display: flex;
     flex-direction: column;
@@ -155,9 +215,16 @@ form.searchForm {
     border: none;
     box-shadow: 4px 4px 0px #2f7085;
 }
-
-
+.findBtn:hover{
+	background: #2488a8;
+	box-shadow: 2px 2px 0px #2f7085;
+}
 /*results*/
+
+.savedSongs h2 {
+    text-align: center;
+    
+}
 .results {
     display: flex;
     justify-content: space-around;
@@ -176,6 +243,7 @@ img.artistPic{
 	box-shadow: 3px 3px 8px rgba(0, 0, 0, 0.41);
 	border-radius: 10px;
 	overflow:hidden;
+	margin-bottom: 25px;
 }
 .info{
 	height: 85px;
@@ -206,7 +274,7 @@ a.playSpo{
     width: 100%;
     font-weight: bold;
     display: block;
-    padding: 15px 0px;
+    padding: 15px 5px;
     border-bottom: 1px solid #d7d7d7;
     text-align: center;
 }
@@ -233,17 +301,34 @@ a.playSpo{
 }
 
 /*Saved Music*/
-img.listPic {
-    width: 100px;
-    height: 100px;
+h2.myMusicTitle{
+	font-size: 30px;
 }
-
+.savedPic{
+	height: 100px;
+}
+img.listPic {
+    width: 120px;
+    height: 100%;
+}
+.savedSongs {
+    max-width: 650px;
+    margin: 0 auto;
+}
 .savedContainer {
     display: flex;
+    margin: 10px 5px;
+    border-radius: 3px;
+    overflow: hidden;
+    background: white;
+    box-shadow: 3px 3px 5px rgba(128, 128, 128, 0.38);
 }
 .savedInfo {
     background: white;
     padding: 5px 30px;
+    width: 100%;
+    height: 100px;
+    overflow-y: scroll;
 }
 .removeBtn{
 	float: right;
@@ -262,4 +347,40 @@ p.savedSong {
 p.savedArtist {
     margin: 10px 0px;
     color: #979797;
+}
+a.savedSpo {
+    text-decoration: none;
+    color: black;
+    font-weight: bold;
+    color: #1ED760;
+}
+
+
+/*responsive*/
+
+
+@media (max-width: 600px) {
+	input.lyrics{
+		font-size: 35px;
+	}
+
+}
+
+@media (max-width: 450px) {
+	.topBar{
+		flex-direction: column;
+
+	}
+
+	.logo{
+		margin-bottom: 5px;
+	}
+
+	.modal{
+		width: 350px;
+	}
+	.savedInfo{
+		padding: 5px 5px 0px 15px;
+	}
+
 }
