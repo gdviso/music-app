@@ -50,6 +50,9 @@ nav.initialNav a,  nav.userNav a{
  nav.initialNav a:hover, nav.userNav a:hover{
  	color:#54c4e8;
  }
+ .lyricsBtn:hover{
+ 	color: black;
+ }
 /*icons before and after:*/
 a.logOut:before{
 	font-family: FontAwesome;
@@ -184,7 +187,7 @@ input.lyrics {
     margin-bottom: 25px;
 
 }
-input.lyrics,input.lyrics::-webkit-input-placeholder, h2.myMusicTitle{
+input.lyrics,input.lyrics::-webkit-input-placeholder, h2.myMusicTitle, .addBtn{
 /*bacground for all browsers:*/
     background: #fc00ff; 
     background: -moz-linear-gradient(left,  #fc00ff 0%, #862dff 50%, #35a4ff 100%); 
@@ -287,10 +290,9 @@ a.playSpo{
 }
 .addBtn{
 	border: none;
-	color: #ff1ed9;
 	padding: 10px;
 	border-left: 1px solid #d7d7d7;
-	background: none;
+	font-weight: bold;
 }
 .lyricsBtn{
 	text-decoration: none;
@@ -298,6 +300,11 @@ a.playSpo{
 	color:rgba(125, 125, 125, 0.64);
 	border: none;
 	padding: 10px;
+}
+.addBtn:hover{
+	background:black;
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
 }
 
 /*Saved Music*/
@@ -353,6 +360,9 @@ a.savedSpo {
     color: black;
     font-weight: bold;
     color: #1ED760;
+}
+.playSpo:hover{
+	 color: #1ED760;
 }
 
 

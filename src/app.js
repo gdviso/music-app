@@ -186,7 +186,7 @@ class App extends React.Component{
 			<div>
 				<Header/>
 				<form onSubmit={this.findSong} className="searchForm">
-		             <input required className="lyrics" type="text" onChange={this.handleChange} name="lyrics" placeholder="Type lyrics here!"/>
+		             <input required className="lyrics" type="text" onChange={this.handleChange} name="lyrics" placeholder="Type lyrics here."/>
 		             <input className="findBtn" type="submit" value="Find me the song!"/>
 	             </form>
 	             <div className="results">
