@@ -3,11 +3,15 @@ import PicAndLink from './Spotify';
 
 
 export default function MySongs(props) {
-	return  ( <div>
-				<img className="listPic" src={props.data.pic} alt=""/>
-				<a className="playSpo" href={props.data.link}>Play {props.data.artist} on spotify</a>
-				<p>{props.data.name}</p>
-				<p>By: {props.data.artist}</p>
-				<button onClick={() => props.remove(props.data)}>❌ Remove Song</button>
+	return  ( <div className="savedContainer">
+				<div className="savedPic">
+					<img className="listPic" src={props.data.pic} alt=""/>
+				</div>
+				<div className="savedInfo">
+					<button className="removeBtn" onClick={() => props.remove(props.data)}><i className="fa fa-times-circle" aria-hidden="true"></i></button>
+					<p className="savedSong">{props.data.name}</p>
+					<p className="savedArtist">{props.data.artist}</p>
+					<a className="savedSpo" href={props.data.link}>Play {props.data.artist} on Spotify</a>
+				</div>
 			</div>)
 }

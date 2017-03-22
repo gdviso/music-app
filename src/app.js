@@ -68,7 +68,7 @@ class App extends React.Component{
 		if(this.state.song !== " " ){ //avoid blank search
 			let song = this.state.song;
 			ajax({
-				url: 'http://proxy.hackeryou.com',
+				url: 'https://proxy.hackeryou.com',
 		        dataType: 'json',
 		        method:'GET',
 				data:{
@@ -82,11 +82,13 @@ class App extends React.Component{
 					}
 				}	
 			}).then((data) => {
-				// console.log(data);
+				console.log(data);
 				this.setState({
 					songs: data.message.body.track_list
 				})
 			});
+		}else if(this.state.song === "" ){
+			alert('no bueno')
 		}
     }
     handleChange(e){
@@ -149,14 +151,14 @@ class App extends React.Component{
 			// console.log(song);
 			return (
 				<div key={song.track_id}>
-					<div className="results">
-						<div className="songContainer">
+						<div className="songContainer animated zoomIn">
 							<PicAndLink index={i} getAlbumArtwork={this.getAlbumArtwork} artistPic={ogSong.pic} artistLink={ogSong.link} data={song}/>
-							<a href={song.track_share_url}>See full lyrics</a>
-							<button onClick={() => this.addSong(song, ogSong)} className="add">➕ Add to my songs!</button>
+							<div className="buttons">
+								<a className="lyricsBtn" href={song.track_share_url}>See full lyrics</a>
+								<button onClick={() => this.addSong(song, ogSong)} className="addBtn">My Music</button>
+							</div>
 						</div>
 					</div>
-				</div>
 			)
 		});
 	}
@@ -168,15 +170,14 @@ class App extends React.Component{
 		             <input required className="lyrics" type="text" onChange={this.handleChange} name="lyrics" placeholder="Type lyrics to find a song!"/>
 		             <input className="findBtn" type="submit" value="Find me the song!"/>
 	             </form>
-	             {this.displayResults()}   
-
+	             <div className="results">
+	            	 {this.displayResults()}  
+	             </div> 
 				<div className="savedSongs">
 					<h2>My Music</h2>
-					<div>
 						{this.state.mySongs.map((song, i) => {
 							return <MySongs data={song} remove={this.removeSong} key={`song-${i}`}/>
 						})}
-					</div>
 				</div>
 			</div>
 		)

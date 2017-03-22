@@ -9,9 +9,10 @@ export default class PicAndLink extends React.Component {
         return(
             <div>
                 <img className="artistPic" src={this.props.artistPic} alt=""/>
-                <h3>Song: {this.props.data.track_name}</h3>
-                <p>Artist: {this.props.data.artist_name}</p>
-                <p>Album: {this.props.data.album_name}</p>
+                <div className="info">
+                    <p className="songTitle">{this.props.data.track_name}</p>
+                    <p className="artistTitle">{this.props.data.artist_name}</p>
+                </div>
                 <a className="playSpo" href={this.props.artistLink}>Play {this.props.data.artist_name} on Spotify</a>
             </div>
         )

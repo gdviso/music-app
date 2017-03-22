@@ -108,7 +108,7 @@ export default class Header extends React.Component {
 						<div className="logo">
 							<a href="index.html">
 							<img className="logo animated jello" src="../assets/logo.svg" alt=""/>
-							<img className="logo2" src="../assets/logo2.png" alt=""/>
+							<img className="logo2" src="../assets/mymusic.png" alt=""/>
 							</a>
 						</div>	
 						{loginOption}
