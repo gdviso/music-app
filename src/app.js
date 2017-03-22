@@ -162,7 +162,7 @@ class App extends React.Component{
 							<PicAndLink index={i} getAlbumArtwork={this.getAlbumArtwork} artistPic={ogSong.pic} artistLink={ogSong.link} data={song}/>
 							<div className="buttons">
 								<a className="lyricsBtn" href={song.track_share_url}>See full lyrics</a>
-								<button onClick={() => this.addSong(song, ogSong)} className="addBtn">My Music</button>
+								<a onClick={() => this.addSong(song, ogSong)} className="addBtn">My Music</a>
 							</div>
 						</div>
 					</div>
@@ -174,7 +174,7 @@ class App extends React.Component{
 		let logTitle = "";
 		if (this.state.loggedin === false){
 			logTitle = (
-				<h2>Log in to be able to save songs!</h2>
+				<h2>Create an account or log in to be able to save songs!</h2>
 			)
 		}else if (this.state.loggedin === true){
 			logTitle = (
@@ -198,6 +198,8 @@ class App extends React.Component{
 							return <MySongs data={song} remove={this.removeSong} key={`song-${i}`}/>
 						})}
 				</div>
+				{/*<footer>
+				<p>Done by <a href="http://gusdom.com/">Gustavo Dominguez</a> using <a href="https://www.musixmatch.com/">Musixmatch's</a> & <a href="https://www.spotify.com">Spotify's</a> API</p></footer>*/}
 			</div>
 		)
 	}

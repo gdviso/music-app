@@ -77,7 +77,7 @@ a.playSpo:before, a.savedSpo:before{
    	content: "\f04b";
    	padding-right: 5px;
 }
-button.addBtn:before{
+a.addBtn:before{
 	font-family: FontAwesome;
    	content: "\f055";
    	padding-right: 5px;
@@ -187,7 +187,7 @@ input.lyrics {
     margin-bottom: 25px;
 
 }
-input.lyrics,input.lyrics::-webkit-input-placeholder, h2.myMusicTitle, .addBtn{
+input.lyrics,input.lyrics::-webkit-input-placeholder, h2.myMusicTitle, .addBtn, footer a{
 /*bacground for all browsers:*/
     background: #fc00ff; 
     background: -moz-linear-gradient(left,  #fc00ff 0%, #862dff 50%, #35a4ff 100%); 
@@ -293,6 +293,10 @@ a.playSpo{
 	padding: 10px;
 	border-left: 1px solid #d7d7d7;
 	font-weight: bold;
+	text-align: center;
+	cursor:pointer;
+	font-weight: bold;
+
 }
 .lyricsBtn{
 	text-decoration: none;
@@ -365,6 +369,22 @@ a.savedSpo {
 	 color: #1ED760;
 }
 
+/*footer*/
+footer {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    text-align: center;
+    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.20);
+    background: rgba(255, 255, 255, 0.33);
+    }
+
+footer a{
+	text-decoration: none;
+	font-weight: bold;
+
+}
 
 /*responsive*/
 
@@ -377,6 +397,9 @@ a.savedSpo {
 }
 
 @media (max-width: 450px) {
+	input.lyrics{
+		font-size: 25px;
+	}
 	.topBar{
 		flex-direction: column;
 
@@ -391,6 +414,10 @@ a.savedSpo {
 	}
 	.savedInfo{
 		padding: 5px 5px 0px 15px;
+	}
+
+	footer p{
+		font-size: 13px;
 	}
 
 }
