@@ -11,6 +11,9 @@ background: linear-gradient(to bottom, #D5DEE7 0%, #E8EBF2 50%, #E2E7ED 100%), l
  height: 100vh;
  font-family: 'lato',sans-serif;
 }
+.main{
+	height: 100vh;
+}
 
 /*header*/
 
@@ -177,6 +180,10 @@ i.fa.fa-times-circle:hover {
 
 }
 /*search bar*/
+p.notice{
+	text-align: center;
+	color: #757575;
+}
 input.lyrics {
     background: none;
     border: none;
@@ -185,9 +192,10 @@ input.lyrics {
     text-align: center;
     font-family: 'Montserrat', sans-serif;
     margin-bottom: 25px;
+    color: #35a4ff;
 
 }
-input.lyrics,input.lyrics::-webkit-input-placeholder, h2.myMusicTitle, .addBtn, footer a{
+input.lyrics::-webkit-input-placeholder, h2.myMusicTitle, .addBtn, footer a:hover{
 /*bacground for all browsers:*/
     background: #fc00ff; 
     background: -moz-linear-gradient(left,  #fc00ff 0%, #862dff 50%, #35a4ff 100%); 
@@ -232,6 +240,7 @@ form.searchForm {
     display: flex;
     justify-content: space-around;
     flex-wrap: wrap;
+    min-height: 45vh;
 }
 
 img.artistPic{
@@ -371,18 +380,15 @@ a.savedSpo {
 
 /*footer*/
 footer {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
     text-align: center;
-    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.20);
-    background: rgba(255, 255, 255, 0.33);
+    margin-top: 20px;
+    padding: 10px 0px;
     }
 
 footer a{
 	text-decoration: none;
 	font-weight: bold;
+	color:#35a4ff;
 
 }
 
@@ -398,7 +404,7 @@ footer a{
 
 @media (max-width: 450px) {
 	input.lyrics{
-		font-size: 25px;
+		font-size: 30px;
 	}
 	.topBar{
 		flex-direction: column;
@@ -418,6 +424,9 @@ footer a{
 
 	footer p{
 		font-size: 13px;
+	}
+	.results{
+		min-height: 30vh;
 	}
 
 }

@@ -82,7 +82,7 @@ class App extends React.Component{
 					}
 				}	
 			}).then((data) => {
-				console.log(data);
+				// console.log(data);
 				this.setState({
 					songs: data.message.body.track_list
 				})
@@ -110,7 +110,7 @@ class App extends React.Component{
 		.then((spoData) => {
 			if(spoData.artists.items.length === 0) {
 				const artistPic = "/public/assets/noimage.svg";
-				const artistLink = "http://spotify.com/";
+				const artistLink = "https://spotify.com/";
 				const newSongs = [...this.state.songs];
 				newSongs[i].pic = artistPic;
 				newSongs[i].link = artistLink;
@@ -170,21 +170,25 @@ class App extends React.Component{
 		});
 	}
 	render(){
-		console.log(this.state.loggedin)
+		// console.log(this.state.loggedin)
 		let logTitle = "";
-		if (this.state.loggedin === false){
-			logTitle = (
-				<h2>Create an account or log in to be able to save songs!</h2>
-			)
-		}else if (this.state.loggedin === true){
+		let notice = "";
+
+		 if (this.state.loggedin === true){
 			logTitle = (
 				<h2 className="myMusicTitle">My Music</h2>
 			)
 		}
+		if(this.state.loggedin === false){
+			notice=(
+			<p className="notice">Create an account or login to be able to save songs!</p>
+			)
+		}
 		{console.log(logTitle)}
 		return(
-			<div>
+			<div className="main">
 				<Header/>
+				{notice}
 				<form onSubmit={this.findSong} className="searchForm">
 		             <input required className="lyrics" type="text" onChange={this.handleChange} name="lyrics" placeholder="Type lyrics here."/>
 		             <input className="findBtn" type="submit" value="Find me the song!"/>
@@ -198,8 +202,8 @@ class App extends React.Component{
 							return <MySongs data={song} remove={this.removeSong} key={`song-${i}`}/>
 						})}
 				</div>
-				{/*<footer>
-				<p>Done by <a href="http://gusdom.com/">Gustavo Dominguez</a> using <a href="https://www.musixmatch.com/">Musixmatch's</a> & <a href="https://www.spotify.com">Spotify's</a> API</p></footer>*/}
+				<footer>
+				<p>Done by <a href="https://gusdom.com/">Gustavo Dominguez</a> using <a href="https://www.musixmatch.com/">Musixmatch's</a> & <a href="https://www.spotify.com">Spotify's</a> API</p></footer>
 			</div>
 		)
 	}
