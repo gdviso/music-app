@@ -6,10 +6,10 @@ input[type=reset],input[type=submit]{-webkit-appearance:button;cursor:pointer;}b
 * { -moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box; }
 
 body{
-background: linear-gradient(to bottom, #D5DEE7 0%, #E8EBF2 50%, #E2E7ED 100%), linear-gradient(to bottom, rgba(0,0,0,0.02) 50%, rgba(255,255,255,0.02) 61%, rgba(0,0,0,0.02) 73%), linear-gradient(33deg, rgba(255,255,255,0.20) 0%, rgba(0,0,0,0.20) 100%);
- background-blend-mode: normal,color-burn;
- height: 100vh;
- font-family: 'lato',sans-serif;
+    background: linear-gradient(to bottom, #D5DEE7 0%, #E8EBF2 50%, #E2E7ED 100%), linear-gradient(to bottom, rgba(0,0,0,0.02) 50%, rgba(255,255,255,0.02) 61%, rgba(0,0,0,0.02) 73%), linear-gradient(33deg, rgba(255,255,255,0.20) 0%, rgba(0,0,0,0.20) 100%);
+    background-blend-mode: normal,color-burn;
+    height: 100vh;
+    font-family: 'lato',sans-serif;
 }
 .main{
 	height: 100vh;
@@ -27,8 +27,8 @@ background: linear-gradient(to bottom, #D5DEE7 0%, #E8EBF2 50%, #E2E7ED 100%), l
 }
 
 img.logo{
-	width: 65px;
-  animation-duration: 3s;
+    width: 65px;
+    animation-duration: 3s;
 }
 
 img.logo2{
@@ -58,15 +58,15 @@ nav.initialNav a,  nav.userNav a{
  }
 /*icons before and after:*/
 a.logOut:before{
-	font-family: FontAwesome;
-   	content: "\f08b";
-   	padding-right: 5px;
+    font-family: FontAwesome;
+    content: "\f08b";
+    padding-right: 5px;
 }
 
 a.logIn:before{
-	font-family: FontAwesome;
-   	content: "\f090";
-   	padding-right: 5px;
+    font-family: FontAwesome;
+    content: "\f090";
+    padding-right: 5px;
 }
 
 a.signUp:before{
@@ -98,14 +98,16 @@ h2.myMusicTitle:after{
 
 
 /* modals */
-.modal, .overlay {
+.modal, 
+.overlay {
 	visibility: hidden;
 	opacity: 0;
 	transition: all 0.6s ease;
 	position: absolute;
 }
 
-.modal.show, .overlay.show {
+.modal.show, 
+.overlay.show {
 	visibility: visible;
 	opacity: 1;
 	z-index: 99;
@@ -177,7 +179,6 @@ form.loginForm {
 i.fa.fa-times-circle:hover {
     color: #54c4e8;
     cursor: pointer;
-
 }
 /*search bar*/
 p.notice{
@@ -193,10 +194,9 @@ input.lyrics {
     font-family: 'Montserrat', sans-serif;
     margin-bottom: 25px;
     color: #35a4ff;
-
 }
 input.lyrics::-webkit-input-placeholder, h2.myMusicTitle, .addBtn, footer a:hover{
-/*bacground for all browsers:*/
+    /*bacground for all browsers:*/
     background: #fc00ff; 
     background: -moz-linear-gradient(left,  #fc00ff 0%, #862dff 50%, #35a4ff 100%); 
     background: -webkit-linear-gradient(left,  #fc00ff 0%,#862dff 50%,#35a4ff 100%); 
@@ -234,7 +234,6 @@ form.searchForm {
 
 .savedSongs h2 {
     text-align: center;
-    
 }
 .results {
     display: flex;
@@ -243,10 +242,14 @@ form.searchForm {
     min-height: 45vh;
 }
 
+.artistPicWrapper {
+    overflow: hidden;
+    height: 250px;
+}
+
 img.artistPic{
 	display: block;
 	width: 100%;
-	height: 250px;
 }
 
 .songContainer{
@@ -294,7 +297,8 @@ a.playSpo{
 	display: flex;
     align-items: center;
 }
-.addBtn, .lyricsBtn{
+.addBtn, 
+.lyricsBtn{
 	width: 50%;
 }
 .addBtn{
@@ -383,13 +387,12 @@ footer {
     text-align: center;
     margin-top: 20px;
     padding: 10px 0px;
-    }
+}
 
 footer a{
 	text-decoration: none;
 	font-weight: bold;
 	color:#35a4ff;
-
 }
 
 /*responsive*/
@@ -399,7 +402,6 @@ footer a{
 	input.lyrics{
 		font-size: 35px;
 	}
-
 }
 
 @media (max-width: 450px) {
@@ -408,7 +410,6 @@ footer a{
 	}
 	.topBar{
 		flex-direction: column;
-
 	}
 
 	.logo{
@@ -428,5 +429,4 @@ footer a{
 	.results{
 		min-height: 30vh;
 	}
-
 }
